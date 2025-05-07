@@ -39,7 +39,8 @@
     // Ação do moderador de confirmar uma requisição
     if (isset($_POST['confirmar_requisicao'])) {
         $id = mysqli_real_escape_string($conexao, ($_POST['id_requisicao']));
-        $sql = "UPDATE requisicao SET estado = 'confirmado' WHERE id = '$id'";
+        $cpf = $_SESSION['cpf'];
+        $sql = "UPDATE requisicao SET estado = 'confirmado',cpf_moderador = '$cpf' WHERE id = '$id'";
         mysqli_query($conexao, $sql);
         header('Location: pendentes.php');
     }
@@ -47,8 +48,9 @@
     // Botão do modal da justificativa
     if (isset($_POST['enviar'])) {
         $just = mysqli_real_escape_string($conexao, ($_POST['justificativa']));
-        $id = mysqli_real_escape_string($conexao, ($_POST['id_requisicao']));
-        $sql = "UPDATE requisicao SET estado = 'recusado', justificativa = '$just' WHERE id = '$id'";
+        $id = $_POST['id_requisicao'];
+        $cpf = $_SESSION['cpf'];
+        $sql = "UPDATE requisicao SET estado = 'recusado', justificativa = '$just', cpf_moderador = '$cpf' WHERE id = '$id'";
         mysqli_query($conexao, $sql);
         header('Location: pendentes.php');
     }
@@ -56,11 +58,12 @@
     if(isset($_POST['gerar_requisicao'])){
         $data_saida = mysqli_real_escape_string($conexao, $_POST['data_saida']);
         $data_retorno = mysqli_real_escape_string($conexao, $_POST['data_retorno']);
+        $id_motivo = $_POST['motivo'];
         if(empty($data_retorno)){
             $data_retorno = null;
         }
         $id_responsavel_aluno = mysqli_real_escape_string($conexao, $_POST['id_aluno']);
-        $sql = "INSERT INTO requisicao (id_responsavel_aluno, data_saida_agendada, data_retorno_agendada, estado) VALUES ('$id_responsavel_aluno', '$data_saida', '$data_retorno', 'pendente')";
+        $sql = "INSERT INTO requisicao (id_responsavel_aluno, data_saida_agendada, data_retorno_agendada, estado, id_motivo) VALUES ('$id_responsavel_aluno', '$data_saida', '$data_retorno', 'pendente', '$id_motivo')";
         mysqli_query($conexao, $sql);
         header('Location: responsavel.php');
     }
