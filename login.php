@@ -58,6 +58,10 @@ session_start();
                 <label for="tipo" class="form-check-label">Moderador</label>
                 <input name="tipo" type="radio" class="form-check-input" id="tipo" value="moderador">
             </div>
+          <div class="form-check form-check-inline text-start my-3">
+                <label for="tipo" class="form-check-label">Portaria</label>
+                <input name="tipo" type="radio" class="form-check-input" id="tipo" value="portaria">
+            </div>
             <button type="submit" class="btn btn-success w-50 py-2" name="login">ENTRAR</button>
         </form>
     </main>
