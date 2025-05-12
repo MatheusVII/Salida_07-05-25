@@ -84,5 +84,38 @@
         </div>
       </div>
     </div>
+     <img id="secretImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Fortaleza_EC_2018.png/1200px-Fortaleza_EC_2018.png" 
+     style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; max-height: 90%; z-index: 9999;">
+
+<script>
+let clickCount = 0;
+const threshold = 50; // Área de 50px nos cantos
+const requiredClicks = 20;
+ 
+document.addEventListener('click', function(e) {
+    // Verificar se o clique foi em algum dos 4 cantos
+    const isTopLeft = e.clientX < threshold && e.clientY < threshold;
+    const isTopRight = e.clientX > window.innerWidth - threshold && e.clientY < threshold;
+    const isBottomLeft = e.clientX < threshold && e.clientY > window.innerHeight - threshold;
+    const isBottomRight = e.clientX > window.innerWidth - threshold && e.clientY > window.innerHeight - threshold;
+
+    if (isTopLeft || isTopRight || isBottomLeft || isBottomRight) {
+        clickCount++;
+        
+        if (clickCount >= requiredClicks) {
+            const img = document.getElementById('secretImage');
+            img.style.display = 'block';
+            
+            // Resetar contador
+            clickCount = 0;
+            
+            // Opcional: Esconder a imagem após 5 segundos
+            setTimeout(() => {
+                img.style.display = 'none';
+            }, 5000);
+        }
+    }
+});
+</script>
   </body>
 </html>
